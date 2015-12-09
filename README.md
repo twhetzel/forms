@@ -19,7 +19,7 @@ Get a local copy of the code using any of the GitHub methods and open the file d
 # Functionality
 This form uses web service return values from the SmartAPI[1] Suggestion API[2] to generate autocomplete values. 
 
-[1] http://smart-api.info
+[1] http://smart-api.info <br>
 [2] http://smart-api.info/apidocs/smartapi#API-Field-Suggestion-Method-GET-API-Field-Suggestion
 
 
