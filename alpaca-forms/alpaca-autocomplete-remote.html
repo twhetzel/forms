@@ -1,0 +1,93 @@
+<html>
+    <head>
+        <title>Alpaca Autocomplete Form Demo</title>
+        <!-- jQuery -->
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        
+        <!-- Handlebars --> 
+        <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.3/handlebars.js"></script>
+        
+        <!-- Bootstrap -->
+        <link type="text/css" rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" />
+        <script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        
+        <!-- Alpaca -->
+        <link type="text/css" href="http://code.cloudcms.com/alpaca/1.5.14/bootstrap/alpaca.min.css" rel="stylesheet" />
+        <script type="text/javascript" src="http://code.cloudcms.com/alpaca/1.5.14/bootstrap/alpaca.min.js"></script>
+        
+        <!-- jQuery UI Support --> 
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
+         
+        <!-- typeahead.js https://github.com/twitter/typeahead.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/bloodhound.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.5/typeahead.bundle.min.js"></script>
+    </head>
+    <body>
+    <div id="inputParameter"> </div>
+    <script>
+        // Instantiate the bloodhound suggestion engine      
+        //console.log("** Create new Bloodhound instance **")
+        var data = new Bloodhound({ 
+            datumTokenizer: function(d) {
+            var test = Bloodhound.tokenizers.whitespace(d.value);
+                $.each(test,function(k,v){
+                    i = 0;
+                    for (; i < v.length; i++) {
+                        test.push(v.substr(i,v.length));
+                        i++;
+                    }
+                })
+                return test;
+            },
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+        
+            prefetch: {
+                url: "http://smart-api.info/api/suggestion/?field=services.inputParameter.parameterDataType",
+                filter: function(data) {
+                   //console.log("** Filter response to get remote data **")
+                    return $.map(data.field_values.buckets, function(bucket) {
+                        return {
+                            value: bucket.key
+                        };
+                    });
+                }
+            }
+        });
+
+        // If prefetch is used, clear cache
+        data.clearPrefetchCache();
+        //console.log("** Clear cache called **")
+
+        //Initialize the bloodhound suggestion engine
+        data.initialize();
+        //console.log("** Initialize called **")
+        
+
+        $("#inputParameter").alpaca({
+            "schema": {
+                "type": "string"
+            },
+            "options": {
+                "type": "text",
+                "label": "Input Parameter DataType",
+                "helper": "Select the name of the input parameter data type, e.g. affymetrix.id, dbsnp, refseq",
+                "typeahead": {
+                    "config": {
+                        "autoselect": true,
+                        "highlight": true,
+                        "hint": true,
+                        "minLength": 2
+                    },
+                    "datasets": {
+                        "name": "data",
+                        "displayKey": 'value',
+                        "source": data.ttAdapter()                        
+                    }
+                }
+            }
+        });
+    </script>
+    </body>
+</html>
+
