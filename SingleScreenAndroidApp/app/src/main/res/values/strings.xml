@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Pets In Need</string>
+    <string name="business_name">Pets In Need</string>
+    <string name="phone_number">(650) 367-1405</string>
+    <string name="email">info@petsinneed.org</string>
+    <string name="Address">871 5th Avenue, Redwood City, CA 94063</string>
+    <string name="website">http://www.petsinneed.org</string>
+    <string name="about_us">About Us</string>
+    <string name="description_text">The mission of Pets In Need is to advance the no-kill
+        movement, reduce pet homelessness, and find every dog and cat a loving home. We
+        accomplish our mission by rescuing cats and dogs from public shelters in the Bay Area
+        and beyond when they are in danger of being euthanized due to space or financial
+        limitations.</string>
+</resources>
